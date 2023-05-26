@@ -1,0 +1,99 @@
+<div class="animate__animated animate__fadeIn">
+<mat-card class="mb10">
+  <mat-card-header class="mb10 mat-center">
+    <mat-card-title> Add Post </mat-card-title>
+  </mat-card-header>
+</mat-card>
+<mat-card>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <form [formGroup]="myForm" class="mt20" (ngSubmit)="onSubmit()">
+          <mat-form-field class="w100" appearance="fill">
+            <mat-label>Title</mat-label>
+            <input
+              formControlName="titulo"
+              type="text"
+              placeholder="enter title..."
+              matInput
+            />
+            <mat-error *ngIf="onValidateField('titulo')">
+              title is <strong> {{ onValidateLengthField("titulo") }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w100" appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea
+              formControlName="descripcion"
+              type="text"
+              placeholder="enter description..."
+              rows="5"
+              matInput
+            >
+            </textarea>
+            <mat-error *ngIf="onValidateField('descripcion')">
+              description is
+              <strong>{{ onValidateLengthField("descripcion") }}</strong>
+            </mat-error>
+          </mat-form-field>
+          
+        
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="w100" appearance="fill">
+                <mat-label>Content</mat-label>
+                <input
+                  formControlName="contenido"
+                  type="text"
+                  placeholder="enter content..."
+                  matInput
+                />
+                <mat-error *ngIf="onValidateField('contenido')">
+                  content is
+                  <strong>{{ onValidateLengthField("contenido") }}</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <mat-form-field appearance="fill" class="mt10 w100">
+            <mat-label>Categorie</mat-label>
+            <mat-select formControlName="categoria">
+              <mat-option *ngFor="let c of categories" [value]="c">
+                {{ c.nombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="onValidateField('categoria')">
+              categorie is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <div class="container text-center">
+            <button
+              type="submit"
+              class="mb10"
+              mat-raised-button
+              color="primary"
+            >
+              Add
+            </button>
+            <button
+              routerLink="/admin/publications"
+              type="submit"
+              class="ml20 mb10"
+              mat-raised-button
+              color="accent"
+            >
+              Back
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</mat-card>
+</div>
+

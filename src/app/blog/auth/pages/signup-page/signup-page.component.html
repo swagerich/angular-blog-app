@@ -1,0 +1,85 @@
+<div class="bootstrap-wrapper">
+  <div class="container">
+    <div class="row mt20">
+      <div class="col-md-6 offset-md-3">
+        <mat-card>
+          <h1 class="text-center mt20">Signup</h1>
+          <form
+            (ngSubmit)="onSubmit()"
+            [formGroup]="myForm"
+            class="text-center"
+          >
+            <!-- USER -->
+            <p>
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Username</mat-label>
+                <input
+                  matInput
+                  placeholder="enter user..."
+                  formControlName="nombre"
+                />
+                <mat-error *ngIf="onFielValidators('nombre')">
+                   <strong> {{onFieldValitatorRequiredLength('nombre') ? 'Username is required': 'Username exists' }} </strong>
+                </mat-error>
+              </mat-form-field>
+            </p>
+                   <!-- APELLIDO -->
+            <p>
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Last name</mat-label>
+                  <input
+                    matInput
+                    placeholder="enter last name.."
+                    formControlName="apellido"
+                  />
+                  <mat-error *ngIf="onFielValidators('apellido')">
+                    <strong>Last name {{onFieldValitatorRequiredLength('apellido')}}</strong>
+                  </mat-error>
+                </mat-form-field>
+              </p>
+                     <!-- EMAIL -->
+              <p>
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input
+                    matInput
+                    placeholder="enter email.."
+                    formControlName="email"
+                  />
+                  <mat-error *ngIf="onFielValidators('email')">
+                    <strong> {{onFieldValitatorRequiredLength('email') ? 'Email is required': 'Email exists' }} </strong>
+                  </mat-error>
+                </mat-form-field>
+              </p>
+            <!-- PASSWORD -->
+            <p>
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input
+                  formControlName="password"
+                  matInput
+                  placeholder="password"
+                  type="password"
+                />
+                <mat-error *ngIf="onFielValidators('password')">
+                  <strong>Password is  {{onFieldValitatorRequiredLength('password')}}</strong>
+                </mat-error>
+              </mat-form-field>
+            </p>
+
+            <div class="container text-center mb20">
+              <button
+                type="submit"
+                class="ml10"
+                mat-raised-button
+                color="accent"
+              >
+                Signup
+              </button>
+            </div>
+          </form>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

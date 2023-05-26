@@ -1,0 +1,78 @@
+<div class="bootstrap-wrapper">
+  <div class="container">
+    <div class="row mt20">
+      <div class="col-md-6 offset-md-3">
+        <mat-card>
+          <!-- <div class="container text-center">
+              <img
+                src="../../../assets/login.jpg"
+                alt=""
+                style="width: 150px; height: 150px"
+              />
+            </div> -->
+          <h1 class="text-center mt20">Login</h1>
+          <form
+            (ngSubmit)="onSubmit()"
+            [formGroup]="myForm"
+            class="text-center"
+          >
+            <!-- USER -->
+            <p>
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>User</mat-label>
+                <input
+                  matInput
+                  placeholder="User"
+                  formControlName="username"
+                />
+                <mat-error *ngIf="onFielValidators('username')">
+                  User is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </p>
+            <!-- PASSWORD -->
+            <p>
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input
+                  formControlName="password"
+                  matInput
+                  placeholder="password"
+                  [type]="hide() ? 'password' : 'text'"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide() == !hide"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide"
+                >
+                  <mat-icon>{{
+                    hide() ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+                <mat-error *ngIf="onFielValidators('password')">
+                  password is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </p>
+
+            <div class="container text-center mb20">
+              <button mat-raised-button color="primary" type="submit">
+                Login
+              </button>
+              <button
+                routerLink="/signup"
+                class="ml10"
+                mat-raised-button
+                color="accent"
+              >
+                Signup
+              </button>
+            </div>
+          </form>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="animate__animated animate__fadeIn">
+
+
+<mat-card class="mb10" *ngIf="categories.length > 0">
+    <mat-card-header class="mb20">
+      <mat-card-title> List of categories </mat-card-title>
+    </mat-card-header>
+  </mat-card>
+  
+  <div class="bootstrap-wrapper">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="container mt10 mb10 text-center">
+          <button
+            routerLink="/admin/add-category"
+            class="mb10"
+            mat-raised-button
+            color="accent"
+          >
+          Add new category
+          </button>
+        </div>
+  
+        <mat-card class="mt10" *ngFor="let c of categories">
+          <mat-list class="list-wrapping">
+            <mat-list-item lines="3">
+              <mat-icon matListItemIcon>view_timeline</mat-icon>
+              <div matListItemTitle>{{ c.nombre }}</div>
+              <div matListItemLine>{{ c.descripcion }}</div>
+            </mat-list-item>
+          </mat-list>
+          <mat-divider></mat-divider>
+          <mat-card-actions  class="ml10">
+            <button
+              (click)="deleteCategory(c.id)"
+              mat-stroked-button
+              color="warn"
+              class="mb10"
+            >
+              Delete
+            </button>
+
+            <button
+            [routerLink]="'/admin/update-category/' + c.id"
+            mat-stroked-button
+            color="accent"
+            class="ml20 mb10"
+          >
+            Update
+          </button>
+          <button
+          [routerLink]="'/admin/view-details/' + c.id"
+          mat-stroked-button
+          color="primary"
+          class="ml20 mb10"
+        >
+          Details
+        </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  </div>

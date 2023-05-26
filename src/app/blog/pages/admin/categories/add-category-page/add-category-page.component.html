@@ -1,0 +1,66 @@
+<div class="animate__animated animate__fadeIn">
+  <mat-card class="mb10">
+    <mat-card-header class="mb10 mat-center">
+      <mat-card-title> Add Category </mat-card-title>
+    </mat-card-header>
+  </mat-card>
+  <mat-card>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <form [formGroup]="myForm" class="mt20" (ngSubmit)="onSubmit()">
+            <mat-form-field class="w100" appearance="fill">
+              <mat-label>Name</mat-label>
+              <input
+                formControlName="nombre"
+                type="text"
+                placeholder="enter name..."
+                matInput
+              />
+              <mat-error *ngIf="onValidateField('nombre')">
+                name is <strong> {{ onValidateLengthField("nombre") }}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w100" appearance="fill">
+              <mat-label>Description</mat-label>
+              <textarea
+                formControlName="descripcion"
+                type="text"
+                placeholder="enter description..."
+                rows="5"
+                matInput
+              >
+              </textarea>
+              <mat-error *ngIf="onValidateField('descripcion')">
+                description is
+                <strong>{{ onValidateLengthField("descripcion") }}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <div class="container text-center">
+              <button
+                type="submit"
+                class="mb10"
+                mat-raised-button
+                color="primary"
+              >
+                Add
+              </button>
+              <button
+                class="ml20 mb10"
+                routerLink="/admin/categories"
+                type="submit"
+                class="ml20 mb10"
+                mat-raised-button
+                color="accent"
+              >
+                Back
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

@@ -1,0 +1,33 @@
+<div *ngIf="publication">
+  <mat-card class="col-12 mb20">
+    <mat-card-header>
+      <mat-card-title>{{ publication.titulo }}</mat-card-title>
+      <mat-card-subtitle>{{ publication.contenido }}</mat-card-subtitle>
+    </mat-card-header>
+    <!-- <img mat-card-image [src]="profileImageUrl" /> -->
+  </mat-card>
+
+  <mat-card class="col-12">
+    <mat-card-header>
+      <mat-card-title>Information</mat-card-title>
+      <mat-card-subtitle>{{ publication.contenido }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-list>
+        <p>{{ publication.descripcion }}</p>
+        <span matListItemTitle>{{ publication.categoria.nombre }}</span>
+      </mat-list>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button
+        (click)="login()"
+        title="Utilice los comentarios para solicitar más información o sugerir mejoras."
+        mat-button
+      >
+        Add Comment
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

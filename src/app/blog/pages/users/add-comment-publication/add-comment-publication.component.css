@@ -1,0 +1,16 @@
+.w50{
+    width: 50%;
+}
+.w100{
+    width: 100%;
+}
+.section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 50px;
+  }
+  
+.mat-center{
+    justify-content: center;
+}

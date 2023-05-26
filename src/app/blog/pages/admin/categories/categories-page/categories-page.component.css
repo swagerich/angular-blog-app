@@ -1,0 +1,11 @@
+.mat-mdc-list-item-icon {
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .list-wrapping {
+    max-width: 900px;
+  }
+
+  .mat-center{
+    justify-content: center;
+  }

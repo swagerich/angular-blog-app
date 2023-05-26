@@ -1,0 +1,76 @@
+<mat-card   [@cardHover]="cardState" (mouseenter)="onCardHover(true)" (mouseleave)="onCardHover(false)">
+    <mat-card-header >
+      <mat-card-title>{{ publication.titulo }}</mat-card-title>
+      <mat-card-subtitle>{{ publication.contenido }}</mat-card-subtitle>
+    </mat-card-header>
+  
+   <!--  <img mat-card-image [src]="'assets/heroes/' + heroe.id + '.jpg'" [alt]="heroe.superHero"> -->
+   <!--  <img mat-card-image [src]="'heroe | heroeImage" [alt]="heroe.superHero"> -->
+  <!--  <img mat-card-image *ngIf="profileImageUrl" [src]="profileImageUrl" style="width: 300px;">
+   <img mat-card-image *ngIf="!profileImageUrl" src="assets/no-image.png" style="width: 300px;">
+   -->
+    <mat-card-content >
+      <p>
+        <strong>Description</strong>
+        <mat-list>
+          <mat-list-item>{{ publication.descripcion }}</mat-list-item>
+        </mat-list>
+        <br />
+        <mat-chip-listbox>
+          <mat-chip
+            *ngFor="let nombre of publication.categoria.nombre.split(',') | slice : 0 : 3"
+          >
+            {{ nombre }}
+          </mat-chip>
+        </mat-chip-listbox>
+      </p>
+      
+     <!--  <p>
+        <strong>Description</strong>
+        {{ publication.descripcion }}
+  
+        <br />
+        <mat-chip-listbox>
+          <mat-chip
+            *ngFor="let nombre of publication.categoria.nombre.split(',') | slice : 0 : 3"
+          >
+            {{ nombre }}
+          </mat-chip>
+        </mat-chip-listbox>
+      </p> -->
+    </mat-card-content>
+  
+    <mat-divider></mat-divider>
+  
+    <mat-card-actions>
+      <!-- <button
+        [routerLink]="['/heroes/edit/', heroe.id]"
+        mat-button
+        mat-raised
+        color="primary"
+      >
+        <mat-icon>edit</mat-icon>
+        Editar
+      </button> -->
+      <button
+        mat-button
+        mat-raised
+        color="primary"
+      >
+        <mat-icon>thumb_up</mat-icon>
+        Like
+      </button>
+      <span class="spacer"></span>
+
+  
+      <button
+        [routerLink]="['/comment-publication', publication.id]"
+        mat-button
+        mat-raised
+        color="accent"
+      >
+        <mat-icon>more_horiz</mat-icon>
+        Mas
+      </button>
+    </mat-card-actions>
+  </mat-card>

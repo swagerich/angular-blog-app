@@ -1,0 +1,56 @@
+<div class="animate__animated animate__fadeIn">
+  <mat-card class="mb10">
+    <mat-card-header class="mb10 mat-center">
+      <mat-card-title> Update Category </mat-card-title>
+    </mat-card-header>
+  </mat-card>
+  <mat-card>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <form class="mt20" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="w100" appearance="fill">
+              <mat-label>Name</mat-label>
+              <input
+                formControlName="nombre"
+                type="text"
+                placeholder="enter name..."
+                matInput
+              />
+              <mat-error *ngIf="onValidateField('nombre')">
+                name is <strong> {{ onValidateLengthField("nombre") }}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w100" appearance="fill">
+              <mat-label>Description</mat-label>
+              <textarea
+                formControlName="descripcion"
+                type="text"
+                placeholder="enter description..."
+                rows="5"
+                matInput
+              >
+              </textarea>
+              <mat-error *ngIf="onValidateField('descripcion')">
+                description is <strong> {{ onValidateLengthField("descripcion") }}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <div class="container text-center">
+              <button
+                type="submit"
+                class="mb10"
+                mat-raised-button
+                color="primary"
+                [disabled]="myForm.invalid"
+              >
+                Update
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
