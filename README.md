@@ -1,4 +1,4 @@
-# AngularBlopApp
+# AngularBlogApp
 
 ## TECH
 * Angular 16
