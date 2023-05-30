@@ -36,7 +36,7 @@ export class SignupPageComponent {
       return;
     }
 
-    this.authService.signupAdmin(this.currentUser).subscribe({
+    this.authService.signupUser(this.currentUser).subscribe({
       next: () => {
        // Swal.fire('¡Exito!', 'Registrado con exito.', 'success');
       },

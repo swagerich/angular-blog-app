@@ -1,10 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorsService } from 'src/app/shared/validators.service';
 import { PublicationDto } from '../../../../interfaces/proyection/publicationDto.interface';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { PublicationService } from 'src/app/blog/services/publication-service/publication.service';
-import { switchMap } from 'rxjs';
+import { switchMap, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './update-publication-page.component.html',
   styleUrls: ['./update-publication-page.component.css']
 })
-export class UpdatePublicationPageComponent implements OnInit{
+export class UpdatePublicationPageComponent implements OnInit,OnDestroy{
 
 
   private validatorService = inject(ValidatorsService);
@@ -22,6 +22,8 @@ export class UpdatePublicationPageComponent implements OnInit{
   private  publicationService = inject(PublicationService);
 
   private fb = inject(FormBuilder);
+
+  private subscription : Subscription = new Subscription;
 
   public categories : PublicationDto[] = [];
   
@@ -48,10 +50,14 @@ export class UpdatePublicationPageComponent implements OnInit{
     }
 
     if(this.currentPublication.id){
-      this.publicationService.updatePublication(this.currentPublication.id,this.currentPublication).subscribe({
+    this.subscription = this.publicationService.updatePublication(this.currentPublication.id,this.currentPublication).subscribe({
         next:(publication) =>{
           Swal.fire('Succesfull',`${publication.titulo} se actualizo con exito!`,'success')
-          this.router.navigate(['/admin/publications']);
+          .then(resp =>{
+            if(resp.isConfirmed){
+              this.router.navigate(['/admin/publications']);
+            }
+          })
         },
         error:() =>{
           this.validatorService.validateSnackBar('Ocurrio un problema en el sistema!')
@@ -63,7 +69,7 @@ export class UpdatePublicationPageComponent implements OnInit{
 
 
   categoryId(): void {
-    this.activateRoute.params.pipe(
+   this.subscription = this.activateRoute.params.pipe(
       switchMap((params:Params) => this.publicationService.publicationById(+params['id']))
     ).subscribe({
       next:(publication) =>{
@@ -76,7 +82,7 @@ export class UpdatePublicationPageComponent implements OnInit{
   }
 
   categoriesAll(): void {
-    this.publicationService.allPublications().subscribe({
+   this.subscription = this.publicationService.allPublications().subscribe({
       next:(categories) =>{
         this.categories =  categories;
       },
@@ -92,5 +98,9 @@ export class UpdatePublicationPageComponent implements OnInit{
   }
   onValidateLengthField(field: string): string | null {
     return this.validatorService.isValidFieldLength(this.myForm, field);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

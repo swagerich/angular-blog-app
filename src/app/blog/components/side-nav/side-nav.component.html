@@ -1,9 +1,44 @@
 <p>
   <mat-toolbar color="primary">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <button routerLink="/" mat-icon-button class="example-icon">
       <mat-icon>rss_feed</mat-icon>
     </button>
     <span>Blog App</span>
     <span class="example-spacer"></span>
+    <button
+      *ngIf="isLoggedIn && user"
+      (click)="role()"
+      mat-raised-button
+      class="example-icon favorite-icon mr20 ml20"
+    >
+      {{ user.nombre }}
+    </button>
+    <button
+      *ngIf="isLoggedIn"
+      (click)="logout()"
+      [routerLink]="'/logout'"
+      mat-button
+      class="example-icon"
+    >
+      Logout
+    </button>
+
+    <button
+      *ngIf="!isLoggedIn"
+      mat-button
+      routerLink="/login"
+      routerLinkActive="active"
+    >
+      Login
+    </button>
+
+    <button
+      *ngIf="!isLoggedIn"
+      mat-button
+      routerLink="/signup"
+      routerLinkActive="active"
+    >
+      Signup
+    </button>
   </mat-toolbar>
 </p>

@@ -4,7 +4,7 @@ import { switchMap } from 'rxjs';
 
 import { PublicationDto } from 'src/app/blog/interfaces/proyection/publicationDto.interface';
 import { PublicationService } from 'src/app/blog/services/publication-service/publication.service';
-import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-publication-details-page',

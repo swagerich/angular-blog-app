@@ -1,17 +1,20 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, OnDestroy } from '@angular/core';
 import { CategoriaDto } from 'src/app/blog/interfaces/proyection/categoriaDto.interface';
 import { CategoriaService } from '../../../../services/categories-service/categoria.service';
 import { ValidatorsService } from 'src/app/shared/validators.service';
 import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'blog-categories-page',
   templateUrl: './categories-page.component.html',
   styleUrls: ['./categories-page.component.css'],
 })
-export class CategoriesPageComponent implements OnInit {
+export class CategoriesPageComponent implements OnInit, OnDestroy {
   private categoriaService: CategoriaService = inject(CategoriaService);
   private validatorService = inject(ValidatorsService);
+
+  private subcription: Subscription = new Subscription();
 
   public categories: CategoriaDto[] = [];
 
@@ -20,7 +23,7 @@ export class CategoriesPageComponent implements OnInit {
   }
 
   getAllCategories(): void {
-    this.categoriaService.allCategories().subscribe({
+    this.subcription = this.categoriaService.allCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
       },
@@ -46,7 +49,7 @@ export class CategoriesPageComponent implements OnInit {
         confirmButtonText: 'Si,Eliminar !',
       }).then((resp) => {
         if (resp.isConfirmed) {
-          this.categoriaService.deleteCategory(id).subscribe({
+        this.subcription = this.categoriaService.deleteCategory(id).subscribe({
             next: () => {
               Swal.fire(
                 'Eliminado!',
@@ -66,5 +69,8 @@ export class CategoriesPageComponent implements OnInit {
         }
       });
     }
+  }
+  ngOnDestroy(): void {
+    this.subcription.unsubscribe();
   }
 }

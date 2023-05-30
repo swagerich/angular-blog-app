@@ -38,5 +38,13 @@ export class PublicationService{
   return this.http.get<PublicationDto>(`${this.endPoint}/publicar/${id}`)
  }
 
+ increaseLikeInPublication(publiId:number): Observable<any>{
+    return this.http.post<any>(`${this.endPoint}/publicar/${publiId}/like`,{});
+ }
+
+ getAllPublicationInCategoryId(cateId:number): Observable<PublicationDto[]> {
+   return this.http.get<PublicationDto[]>(`${this.endPoint}/publicar/category/${cateId}`);
+ }
+
 }
 

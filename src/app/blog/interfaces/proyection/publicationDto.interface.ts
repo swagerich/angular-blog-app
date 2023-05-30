@@ -6,5 +6,6 @@ export interface PublicationDto{
     descripcion:string;
     contenido:string;
     categoria:CategoriaDto;
+    likes_count:number;
 
 }

@@ -1,0 +1,90 @@
+<div class="boostrap-wrapper animate__animated animate__fadeIn">
+  <div class="container-fluid">
+    <div class="row">
+      <mat-card class="col-md-8">
+        <mat-card-content>
+          <mat-card-title> Profile </mat-card-title>
+          <mat-card-subtitle>your profile</mat-card-subtitle>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+
+        <div class="card-body">
+          <form [formGroup]="myForm">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Username</mat-label>
+                  <input [readonly]="true" 
+                  formControlName="nombre"
+                  matInput />
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Last Name</mat-label>
+                  <input [readonly]="true" 
+                   matInput 
+                   formControlName="apellido"
+                   type="text" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Email</mat-label>
+                  <input [readonly]="true" 
+                  matInput
+                  formControlName="email"
+                  type="text" />
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <input 
+                   matInput 
+                   formControlName="password"
+                   type="password" />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <button
+              mat-raised-button
+              disabled
+              type="submit"
+            >
+               Profile
+            </button>
+          </form>
+        </div>
+      </mat-card>
+
+      <div class="col-md-4">
+        <mat-card>
+
+              <img mat-card-sm-image  class="img" src="./assets/search.png" />
+
+          <div class="card-body">
+            <h6 class="card-category text-gray">CEO / Co-Founder</h6>
+            <h4 class="card-title">Erich Hc</h4>
+            <p class="card-description">
+              Programming is a constant challenge and that makes it exciting.
+              Each problem you solve gives you a sense of accomplishment and
+              drives you to face new challenges....
+            </p>
+            <a
+              mat-raised-button
+              color="warn"
+              class="btn btn-danger pull-right"
+              href="https://github.com/swagerich"
+              target="_blank"
+            >
+              Follow
+            </a>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

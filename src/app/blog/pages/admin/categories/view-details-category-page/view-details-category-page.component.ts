@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Params } from '@angular/router';
-import { delay, switchMap } from 'rxjs';
+import { Subscription, delay, switchMap } from 'rxjs';
 import { PublicationDto } from 'src/app/blog/interfaces/proyection/publicationDto.interface';
 import { PublicationService } from 'src/app/blog/services/publication-service/publication.service';
 import { ValidatorsService } from 'src/app/shared/validators.service';
@@ -11,11 +11,12 @@ import { ValidatorsService } from 'src/app/shared/validators.service';
   templateUrl: './view-details-category-page.component.html',
   styleUrls: ['./view-details-category-page.component.css'],
 })
-export class ViewDetailsCategoryPageComponent {
-
+export class ViewDetailsCategoryPageComponent implements OnDestroy{
   private publicationService: PublicationService = inject(PublicationService);
   private validatorService = inject(ValidatorsService);
   private activateRoute = inject(ActivatedRoute);
+
+  private subscription: Subscription = new Subscription();
 
   displayedColumns: string[] = [
     'id',
@@ -39,7 +40,7 @@ export class ViewDetailsCategoryPageComponent {
   }
 
   showPublicationsPageWithCategory(): void {
-    this.activateRoute.params
+    this.subscription = this.activateRoute.params
       .pipe(
         delay(1000),
         switchMap((parms: Params) =>
@@ -72,7 +73,7 @@ export class ViewDetailsCategoryPageComponent {
   }
 
   getPage(nroPagina: number, cantidadPorPagina: number): void {
-    this.activateRoute.params
+    this.subscription  =  this.activateRoute.params
       .pipe(
         switchMap((parms: Params) =>
           this.publicationService.getAllPublicationsPageByCategorieId(
@@ -91,4 +92,9 @@ export class ViewDetailsCategoryPageComponent {
         },
       });
   }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
 }

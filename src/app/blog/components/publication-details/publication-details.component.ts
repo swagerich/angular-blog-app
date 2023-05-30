@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { PublicationDto } from '../../interfaces/proyection/publicationDto.interface';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
   selector: 'blog-publication-details-components',
@@ -9,6 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class PublicationDetailsComponent implements OnInit {
 
+  private authService:AuthService = inject(AuthService);
 
   @Input()
   public publication?:PublicationDto;
@@ -33,5 +35,9 @@ export class PublicationDetailsComponent implements OnInit {
       },
       footer: '<a href="login">Already have an account? Log in</a> ',
     });
+  }
+
+   isLogged() : boolean {
+    return this.authService.isLoggedIn();
   }
 }

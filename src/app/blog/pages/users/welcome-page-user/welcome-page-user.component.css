@@ -1,0 +1,40 @@
+.welcome-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: 48px;
+  margin-right: 16px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+/* Animations */
+
+@keyframes rotateAnimation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animation triggers */
+
+.logo {
+  animation: rotateAnimation 2s infinite;
+}

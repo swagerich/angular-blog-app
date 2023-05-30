@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoriaDto } from 'src/app/blog/interfaces/proyection/categoriaDto.interface';
@@ -8,13 +8,14 @@ import { PublicationService } from 'src/app/blog/services/publication-service/pu
 import { ValidatorsService } from 'src/app/shared/validators.service';
 
 import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'blog-add-post-page',
   templateUrl: './add-post-page.component.html',
   styleUrls: ['./add-post-page.component.css'],
 })
-export class AddPostPageComponent implements OnInit {
+export class AddPostPageComponent implements OnInit, OnDestroy {
   private publicationService: PublicationService = inject(PublicationService);
 
   private validatorService = inject(ValidatorsService);
@@ -25,12 +26,21 @@ export class AddPostPageComponent implements OnInit {
 
   public categories: CategoriaDto[] = [];
 
+  private subscription: Subscription = new Subscription();
+
   public myForm: FormGroup = this.fb.group({
     id: 0,
     titulo: ['', [Validators.required, Validators.minLength(10)]],
-    descripcion: ['', [Validators.required, Validators.minLength(20)]],
-    contenido: ['',[Validators.required]],
-    categoria: ['',Validators.required]
+    descripcion: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(20),
+        Validators.maxLength(2500),
+      ],
+    ],
+    contenido: ['', [Validators.required]],
+    categoria: ['', Validators.required],
   });
 
   ngOnInit(): void {
@@ -42,13 +52,13 @@ export class AddPostPageComponent implements OnInit {
   }
 
   getCategories(): void {
-    this.categoriesService.allCategories().subscribe({
+    this.subscription = this.categoriesService.allCategories().subscribe({
       next: (categories: CategoriaDto[]) => {
         this.categories = categories;
       },
-      error:() =>{
+      error: () => {
         console.error('no cargo las categorias');
-      }
+      },
     });
   }
 
@@ -63,29 +73,35 @@ export class AddPostPageComponent implements OnInit {
       ...this.myForm.value,
       categoria:this.myForm.value.categoria.id;
     }; */
-    
+
     console.log(this.myForm.value);
-    
-    this.publicationService.addPublication(this.currentPublication).subscribe({
-      next:()=>{
-        const title = this.myForm.get('titulo')?.value;
-        Swal.fire('Exito!',`${title} Agregado con exito!`,'success');
-      },
-      error:() =>{
-        this.validatorService.validateSnackBar('Ocurrio un error, inténtelo de nuevo porfavor !');
-      },
-      complete:() =>{
-        this.myForm.reset();
-      }
-    });
 
+    this.subscription = this.publicationService
+      .addPublication(this.currentPublication)
+      .subscribe({
+        next: () => {
+          const title = this.myForm.get('titulo')?.value;
+          Swal.fire('Exito!', `${title} Agregado con exito!`, 'success');
+        },
+        error: () => {
+          this.validatorService.validateSnackBar(
+            'Ocurrio un error, inténtelo de nuevo porfavor !'
+          );
+        },
+        complete: () => {
+          this.myForm.reset();
+        },
+      });
   }
-
 
   onValidateField(field: string): boolean | null {
     return this.validatorService.isValidField(this.myForm, field);
   }
   onValidateLengthField(field: string): string | null {
     return this.validatorService.isValidFieldLength(this.myForm, field);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

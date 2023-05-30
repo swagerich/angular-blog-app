@@ -20,9 +20,9 @@
       </mat-list>
     </mat-card-content>
 
-    <mat-card-actions>
+    <mat-card-actions *ngIf="!isLogged()">
       <button
-        (click)="login()"
+        (click)="login() "
         title="Utilice los comentarios para solicitar más información o sugerir mejoras."
         mat-button
       >

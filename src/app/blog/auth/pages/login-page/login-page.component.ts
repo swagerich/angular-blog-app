@@ -66,10 +66,7 @@ export class LoginPageComponent implements OnInit {
       }
     });
   }
-  signup(): void {
-   // this.myForm.reset();
-  }
-
+ 
   onFielValidators(field: string): boolean | null {
      return this.validatorService.isValidField(this.myForm,field);
   }

@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table'  
 import {MatChipsModule} from '@angular/material/chips';
+import {MatMenuModule} from '@angular/material/menu';
 @NgModule({
   declarations: [],
   imports: [
@@ -25,7 +26,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatSelectModule,
     MatPaginatorModule,
     MatTableModule,
-    MatChipsModule
+    MatChipsModule,
+    MatMenuModule
     
   ],
   exports: [
@@ -40,7 +42,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatSelectModule,
     MatPaginatorModule,
     MatTableModule,
-    MatChipsModule
+    MatChipsModule,
+    MatMenuModule
   ],
 })
 export class MaterialModule {}

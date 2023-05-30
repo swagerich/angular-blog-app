@@ -1,7 +1,7 @@
-import { ComentariDTo } from './comentarioDto.interface';
+import { ComentarioDTo } from './comentarioDto.interface';
 
 export interface PageableResponseComment {
-  comments: ComentariDTo[];
+  comments: ComentarioDTo[];
   pages: Page;
 }
 export interface Page {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, Subject, of, tap } from 'rxjs';
+import { Observable, Subject, of, tap, catchError } from 'rxjs';
 import { environments } from 'src/environments/environments';
 import { LoginDto } from '../../interfaces/proyection/loginDto.interface';
 import { User } from '../../interfaces/user.interface';
@@ -42,7 +42,10 @@ export class AuthService {
   }
   
   getCurrentUser():Observable<any> {
-    return this.http.get(`${this.endPoint}/auth/current-user`);
+    return this.http.get(`${this.endPoint}/auth/current-user`)
+    .pipe(
+      catchError(e => of(e))
+    );
   }
 
   userSaveTokenLocalStorage(accessToken: string) {

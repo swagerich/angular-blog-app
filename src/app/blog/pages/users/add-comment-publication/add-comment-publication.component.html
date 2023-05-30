@@ -5,7 +5,7 @@
     ></blog-publication-details-components>
     <!-- SI ES LOGEADO COMO USUARIO MOSTRAMOS EL PANEL DE AGREGAR COMENTARIO -->
 
-    <mat-card class="mt20">
+    <mat-card class="mt20" *ngIf="isLogged()">
       <div class="container">
         <div class="row">
           <div class="col-md-8 offset-md-2">
@@ -14,32 +14,36 @@
               class="mt20"
               (ngSubmit)="onSubmitCommentPublication()"
             >
-              <mat-form-field class="w100" >
+              <mat-form-field class="w100">
                 <mat-label>Name</mat-label>
                 <input formControlName="nombre" [readonly]="true" matInput />
               </mat-form-field>
 
-              <mat-form-field class="w100" >
+              <mat-form-field class="w100">
                 <mat-label>Email</mat-label>
-                <input formControlName="email"  [readonly]="true" matInput />
+                <input formControlName="email" [readonly]="true" matInput />
               </mat-form-field>
-  
-              <mat-form-field class="w100" >
+
+              <mat-form-field class="w100">
                 <mat-label>Comments</mat-label>
                 <textarea
                   formControlName="texto"
                   type="text"
-                  placeholder="enter description..."
+                  placeholder="enter comment..."
                   rows="5"
                   matInput
                 >
                 </textarea>
+                <mat-error *ngIf="onValidateField('texto')">
+                  the description <strong>{{ onValidateLengthField("texto") }}</strong>
+                </mat-error>
               </mat-form-field>
 
               <div class="container text-center">
                 <button
                   type="submit"
                   class="mb10"
+                  [disabled]="myFormComment.invalid"
                   mat-raised-button
                   color="primary"
                 >
@@ -57,15 +61,15 @@
     <mat-card class="mt20 mb20">
       <div class="container">
         <mat-table [dataSource]="comments" matSort>
-          <!-- Columna "Contenido" -->
+          <!-- Columna "Nombre" -->
           <ng-container matColumnDef="nombre">
             <mat-header-cell *matHeaderCellDef mat-sort-header
-              >nombre</mat-header-cell
+              >Usuario</mat-header-cell
             >
             <mat-cell *matCellDef="let comment">{{ comment.nombre }}</mat-cell>
           </ng-container>
 
-          <!-- Columna "Autor" -->
+          <!-- Columna "Email" -->
           <ng-container matColumnDef="email">
             <mat-header-cell *matHeaderCellDef mat-sort-header
               >email</mat-header-cell
@@ -81,18 +85,23 @@
           </ng-container>
 
           <!-- Columna "Acciones" -->
-          <ng-container matColumnDef="actions">
+          <ng-container
+            *ngIf="isLogged()"
+            matColumnDef="actions"
+          >
             <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-            <mat-cell *matCellDef="let comment">
+            <mat-cell  *matCellDef="let comment">
               <button
                 mat-icon-button
                 color="warn"
+                *ngIf="comment.user.id === userId.id"
                 (click)="deleteComment(comment.id)"
               >
                 <mat-icon>delete</mat-icon>
               </button>
             </mat-cell>
           </ng-container>
+   
 
           <!-- Filas -->
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

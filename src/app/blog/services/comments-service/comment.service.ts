@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable,tap } from 'rxjs';
-import { PublicationDto } from '../../interfaces/proyection/publicationDto.interface';
 import { environments } from 'src/environments/environments';
-import { PageableResponse} from '../../interfaces/proyection/pageableResponse.interface';
-import { ComentariDTo } from '../../interfaces/proyection/comentarioDto.interface';
+import { ComentarioDTo } from '../../interfaces/proyection/comentarioDto.interface';
 import { PageableResponseComment } from '../../interfaces/proyection/pageableResponseComment.interface';
 
 @Injectable({
@@ -16,9 +14,8 @@ export class CommentService{
 
  private http = inject(HttpClient);
 
- 
- addCommentToPublication(comentario:ComentariDTo,publiId:number) : Observable<ComentariDTo>{
-    return this.http.post<ComentariDTo>(`${this.endPoint}/comentario/inPublicacion/${publiId}`,comentario);
+ addCommentToPublication(comentario:ComentarioDTo,publiId:number,userId:number) : Observable<ComentarioDTo>{
+    return this.http.post<ComentarioDTo>(`${this.endPoint}/comentario/inPublicacion/${publiId}/${userId}`,comentario);
  }
 
  getAllCommentPageInPublicationId(publiId:number,page:number,size:number): Observable<PageableResponseComment>{

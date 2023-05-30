@@ -1,17 +1,21 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, OnDestroy } from '@angular/core';
 import { PublicationService } from 'src/app/blog/services/publication-service/publication.service';
 import { PublicationDto } from '../../../../interfaces/proyection/publicationDto.interface';
 import Swal from 'sweetalert2';
 import { ValidatorsService } from 'src/app/shared/validators.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'blog-publications-page',
   templateUrl: './publications-page.component.html',
   styleUrls: ['./publications-page.component.css'],
 })
-export class PublicationsPageComponent implements OnInit {
+export class PublicationsPageComponent implements OnInit,OnDestroy {
+  
   private publicationService = inject(PublicationService);
   private validatorService = inject(ValidatorsService);
+
+  private subscription : Subscription = new Subscription;
 
   @Input()
   public publications: PublicationDto[] = [];
@@ -21,7 +25,7 @@ export class PublicationsPageComponent implements OnInit {
   }
 
   getAllPublications(): void {
-    this.publicationService.allPublications().subscribe({
+   this.subscription = this.publicationService.allPublications().subscribe({
       next: (publications) => {
         this.publications = publications;
       },
@@ -42,7 +46,7 @@ export class PublicationsPageComponent implements OnInit {
         confirmButtonText: 'Si,Eliminar !',
       }).then((resp) => {
         if (resp.isConfirmed) {
-          this.publicationService.deletePublication(id).subscribe({
+          this.subscription =  this.publicationService.deletePublication(id).subscribe({
             next: () => {
               Swal.fire(
                 'Eliminado!',
@@ -64,5 +68,9 @@ export class PublicationsPageComponent implements OnInit {
         }
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

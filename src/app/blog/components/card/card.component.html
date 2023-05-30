@@ -24,47 +24,27 @@
           </mat-chip>
         </mat-chip-listbox>
       </p>
-      
-     <!--  <p>
-        <strong>Description</strong>
-        {{ publication.descripcion }}
-  
-        <br />
-        <mat-chip-listbox>
-          <mat-chip
-            *ngFor="let nombre of publication.categoria.nombre.split(',') | slice : 0 : 3"
-          >
-            {{ nombre }}
-          </mat-chip>
-        </mat-chip-listbox>
-      </p> -->
+
     </mat-card-content>
   
     <mat-divider></mat-divider>
   
     <mat-card-actions>
-      <!-- <button
-        [routerLink]="['/heroes/edit/', heroe.id]"
-        mat-button
-        mat-raised
-        color="primary"
-      >
-        <mat-icon>edit</mat-icon>
-        Editar
-      </button> -->
       <button
+        (click)="like(publication.id)"
         mat-button
         mat-raised
         color="primary"
+
       >
         <mat-icon>thumb_up</mat-icon>
-        Like
+        Like {{likesCount}}
       </button>
       <span class="spacer"></span>
 
   
       <button
-        [routerLink]="['/comment-publication', publication.id]"
+        *ngIf="!isUserAuthenticated();else isUser" [routerLink]="['/comment-publication', publication.id]"
         mat-button
         mat-raised
         color="accent"
@@ -72,5 +52,18 @@
         <mat-icon>more_horiz</mat-icon>
         Mas
       </button>
+
+      <ng-template #isUser>
+        <button
+        [routerLink]="['/user/comment-publication', publication.id]"
+        mat-button
+        mat-raised
+        color="accent"
+      >
+        <mat-icon>more_horiz</mat-icon>
+        Mas
+      </button>
+      </ng-template>
+      
     </mat-card-actions>
   </mat-card>

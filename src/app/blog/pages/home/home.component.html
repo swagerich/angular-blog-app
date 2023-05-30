@@ -1,0 +1,15 @@
+<div class="bootstrap-wrapper animate__animated animate__fadeIn">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 text-center">
+                <h1>Bienvenido</h1>
+                <p>A mi Blog de tecnologico...</p>
+                <button *ngIf="!isUserAuthenticated();else isUser" [routerLink]="'/load'" mat-raised-button color="primary">Ir</button>
+                <ng-template #isUser>
+                    <button  [routerLink]="'/user/publications/0'" mat-raised-button color="primary">Ir</button>
+                </ng-template>
+                
+            </div>
+        </div>
+    </div>
+</div>

@@ -18,12 +18,20 @@ import { LoadPublicationPageComponent } from './pages/public/load-publication-pa
 import { SignupPageComponent } from './auth/pages/signup-page/signup-page.component';
 import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
 import { PublicLayoutPageComponent } from './pages/public/public-layout-page/public-layout-page.component';
-import { PublicationDetailsPageComponent } from './pages/public/publication-details-page/publication-details-page.component';
 import { AddCommentPublication } from './pages/users/add-comment-publication/add-comment-publication.component';
 import { WelcomePageUserComponent } from './pages/users/welcome-page-user/welcome-page-user.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ProfileUserPageComponent } from './pages/users/profile-user-page/profile-user-page.component';
+import { ProfileAdminPageComponent } from './pages/admin/profile-admin-page/profile-admin-page.component';
+import { LoadPublicationUserPageComponent } from './pages/users/load-publication-user-page/load-publication-user-page.component';
 
 const routes: Routes = [
 
+  {
+    path:'',
+    component:HomeComponent,
+    pathMatch:'full'
+  },
 
   {
     path: 'signup',
@@ -36,6 +44,7 @@ const routes: Routes = [
     pathMatch:'full'
   },
 
+  //PUBLICO
   {
     path: '',
     component: PublicLayoutPageComponent,
@@ -46,16 +55,9 @@ const routes: Routes = [
   
       },
       {
-        path:'publication-details/:id',
-        component:PublicationDetailsPageComponent,
- 
-      },
-      /* por ahora lo probare el user aqui */
-      {
         path:'comment-publication/:id',
         component:AddCommentPublication
-      },
-      
+      }
     ]
   },
 
@@ -70,7 +72,27 @@ const routes: Routes = [
         path:'welcome',
         component:WelcomePageUserComponent
       },
-      
+      {
+        path:'profile',
+        component:ProfileUserPageComponent
+      },
+      {
+        path:'publications/:pubId',
+        component:LoadPublicationUserPageComponent,
+  
+      },
+      {
+        path:'comment-publication/:id',
+        component:AddCommentPublication
+      },
+      {
+        path: '404',
+        component: NotFound404Component,
+      },
+      {
+        path: '**',
+        redirectTo: '404',
+      },
     ]
   },
 
@@ -111,6 +133,10 @@ const routes: Routes = [
       {
         path: 'update-publication/:id',
         component: UpdatePublicationPageComponent,
+      },
+      {
+        path: 'profile',
+        component: ProfileAdminPageComponent,
       },
       {
         path: 'welcome',

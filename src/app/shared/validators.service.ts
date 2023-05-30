@@ -2,7 +2,17 @@ import { Injectable, inject } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../blog/auth/services/auth.service';
-import { Observable, catchError, debounce, distinctUntilChanged, map, of, switchMap, throwError, timer } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  debounce,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+  throwError,
+  timer,
+} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +21,6 @@ export class ValidatorsService {
   private snackBar = inject(MatSnackBar);
 
   private authService: AuthService = inject(AuthService);
-
 
   /* VALIDACION CAMPOS */
   public isValidField = (myForm: FormGroup, field: string): boolean | null => {
@@ -31,6 +40,8 @@ export class ValidatorsService {
           return 'required';
         case 'minlength':
           return `the minimum length is ${error['minlength'].requiredLength} characters`;
+        case 'maxlength':
+          return `the maximun length is ${error['maxlength'].requiredLength} characters`;
       }
     }
     return null;
@@ -54,62 +65,62 @@ export class ValidatorsService {
     }
     return null;
   }; */
-  
- //VALIDACION FUNCTIONS IS EXIST Username
- public cantBeUsername(control: FormControl): Observable<ValidationErrors | null> {
-  const value: string = control.value.trim().toLowerCase();
 
-  return timer(1000).pipe(
-    switchMap(() => {
-      return this.authService.existsName(value).pipe(
-        map((exists: boolean) => {
-          if (exists) {
-            return { usernameExists: true };
-          }
-          return null;
-        }),
-        catchError((error) => {
-          if (error.status === 404) {
-            return of(null);
-          } else {
-            return throwError(() => error);
-          }
-        })
-      );
-    }),
-    debounce(() => timer(1000)),
-    distinctUntilChanged()
-  );
-}
+  //VALIDACION FUNCTIONS IS EXIST Username
+  public cantBeUsername(
+    control: FormControl
+  ): Observable<ValidationErrors | null> {
+    const value: string = control.value.trim().toLowerCase();
 
+    return timer(1000).pipe(
+      switchMap(() => {
+        return this.authService.existsName(value).pipe(
+          map((exists: boolean) => {
+            if (exists) {
+              return { usernameExists: true };
+            }
+            return null;
+          }),
+          catchError((error) => {
+            if (error.status === 404) {
+              return of(null);
+            } else {
+              return throwError(() => error);
+            }
+          })
+        );
+      }),
+      debounce(() => timer(1000)),
+      distinctUntilChanged()
+    );
+  }
 
   //VALIDACION FUNCIONTS IS EXIST Email
- public cantBeMail(control: FormControl): Observable<ValidationErrors | null> {
-  const value: string = control.value.trim().toLowerCase();
+  public cantBeMail(control: FormControl): Observable<ValidationErrors | null> {
+    const value: string = control.value.trim().toLowerCase();
 
-  return timer(1000).pipe(
-    switchMap(() => {
-      return this.authService.existsMail(value).pipe(
-        map((exists: boolean) => {
-          if (exists) {
-            return { mailExists: true };
-          }
-          return null;
-        }),
-        catchError(e => of(null))
-      );
-    }),
-    catchError((error) => {
-      if(error.status === 404){
-        return of(null);
-      }
-      else {
-        return throwError(() => error);
-      }
-    }),
-    debounce(() => timer(1000)),
-    distinctUntilChanged()
-  );
+    return timer(1000).pipe(
+      switchMap(() => {
+        return this.authService.existsMail(value).pipe(
+          map((exists: boolean) => {
+            if (exists) {
+              return { mailExists: true };
+            }
+            return null;
+          }),
+          catchError((e) => of(null))
+        );
+      }),
+      catchError((error) => {
+        if (error.status === 404) {
+          return of(null);
+        } else {
+          return throwError(() => error);
+        }
+      }),
+      debounce(() => timer(1000)),
+      distinctUntilChanged()
+    );
   }
 
   /* VALIDACIONES PATTERN */

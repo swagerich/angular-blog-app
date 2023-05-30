@@ -26,7 +26,10 @@ import { CommentsComponent } from './components/comments/comments.component';
 import { PublicationDetailsComponent } from './components/publication-details/publication-details.component';
 import { AddCommentPublication } from './pages/users/add-comment-publication/add-comment-publication.component';
 import { WelcomePageUserComponent } from './pages/users/welcome-page-user/welcome-page-user.component';
-
+import { HomeComponent } from './pages/home/home.component';
+import { ProfileUserPageComponent } from './pages/users/profile-user-page/profile-user-page.component';
+import { ProfileAdminPageComponent } from './pages/admin/profile-admin-page/profile-admin-page.component';
+import { LoadPublicationUserPageComponent } from './pages/users/load-publication-user-page/load-publication-user-page.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,12 @@ import { WelcomePageUserComponent } from './pages/users/welcome-page-user/welcom
     CommentsComponent,
     PublicationDetailsComponent,
     AddCommentPublication,
-    WelcomePageUserComponent
+    WelcomePageUserComponent,
+    HomeComponent,
+    ProfileUserPageComponent,
+    ProfileAdminPageComponent,
+    LoadPublicationUserPageComponent,
+
   ],
   imports: [
     CommonModule,
