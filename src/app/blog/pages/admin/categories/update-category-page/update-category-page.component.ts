@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -58,7 +59,7 @@ export class UpdateCategoryPageComponent implements OnInit,OnDestroy {
           });
         },
         error:() =>{
-          this.validatorService.validateSnackBar('Ocurrio un problema al actualizar');
+            this.validatorService.validateSnackBar('Ocurrio un problema en el sistema');
         }
       })
     }

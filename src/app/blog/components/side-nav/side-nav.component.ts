@@ -14,8 +14,9 @@ export class SideNavComponent implements OnInit {
 
   private router = inject(Router);
 
-  isLoggedIn = false;
-  user!: UserDto;
+  public isLoggedIn = false;
+
+  public user!: UserDto | null;
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
@@ -33,8 +34,8 @@ export class SideNavComponent implements OnInit {
 
   logout() : void {
     this.authService.logout();
-    window.location.reload();
-
+    this.isLoggedIn = false;
+    this.user = null;
   }
 
   role():void{

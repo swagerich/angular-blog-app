@@ -25,6 +25,10 @@ export class CommentService{
  deleteCommentIdInPublicationId(comentId:number,publiId:number): Observable<void>{
    return this.http.delete<void>(`${this.endPoint}/comentario/${comentId}/${publiId}`);
  }
+
+ getAllComentInpublicationId(publiId:number):Observable<ComentarioDTo[]> {
+  return this.http.get<ComentarioDTo[]>(`${this.endPoint}/comentario/comments/${publiId}`);
+ }
 }
 
 

@@ -9,6 +9,8 @@ import { ValidatorsService } from 'src/app/shared/validators.service';
 
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'blog-add-post-page',
@@ -22,11 +24,15 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
 
   private categoriesService: CategoriaService = inject(CategoriaService);
 
+  private router = inject(Router);
+
   private fb = inject(FormBuilder);
 
   public categories: CategoriaDto[] = [];
 
   private subscription: Subscription = new Subscription();
+
+  public photo!: File | null;
 
   public myForm: FormGroup = this.fb.group({
     id: 0,
@@ -41,8 +47,8 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
     ],
     contenido: ['', [Validators.required]],
     categoria: ['', Validators.required],
+    getPhotoHashCode:[0]
   });
-
   ngOnInit(): void {
     this.getCategories();
   }
@@ -75,23 +81,50 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
     }; */
 
     console.log(this.myForm.value);
-
-    this.subscription = this.publicationService
+    if(!this.photo){
+      this.subscription = this.publicationService
       .addPublication(this.currentPublication)
       .subscribe({
         next: () => {
           const title = this.myForm.get('titulo')?.value;
-          Swal.fire('Exito!', `${title} Agregado con exito!`, 'success');
+          Swal.fire('Exito!', `${title} Agregado con exito!`, 'success')
+          .then(resp =>{
+            if(resp.isConfirmed){
+              this.router.navigate(['/admin/publications']);
+            }
+          })
         },
-        error: () => {
-          this.validatorService.validateSnackBar(
-            'Ocurrio un error, inténtelo de nuevo porfavor !'
-          );
-        },
-        complete: () => {
-          this.myForm.reset();
-        },
+        error: (e:HttpErrorResponse) => {
+          if(e.status === 500){
+            this.validatorService.validateSnackBar(
+              'Ocurrio un problema en el servidor !'
+            );
+          }
+          
+        }
       });
+    }else{
+      this.publicationService.addPublicationWithPhoto(this.currentPublication,this.photo).subscribe({
+        next:()=>{
+          const title = this.myForm.get('titulo')?.value;
+          Swal.fire('Exito!', `${title} Agregado con exito!`, 'success')
+          .then(resp =>{
+            if(resp.isConfirmed){
+              this.router.navigate(['/admin/categories']);
+            }
+          });
+        }
+      });
+      
+    }
+    
+  }
+  selectionPhoto(e:any): void{
+    this.photo = e.target.files[0];
+    if(this.photo!.type.indexOf('image') < 0){
+      this.photo= null;
+     this.validatorService.validateSnackBar('El archivo debe ser de tipo imagen');
+    }
   }
 
   onValidateField(field: string): boolean | null {

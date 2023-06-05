@@ -1,9 +1,8 @@
 <div class="animate__animated animate__fadeIn">
 
-
 <mat-card class="mt10 mr20 ml20" *ngFor="let p of publications">
     <mat-card-header>
-      <div mat-card-avatar class="header-image"></div>
+      <div mat-card-avatar class="img-publication"></div>
       <mat-card-title>
         {{ p.titulo }}
       </mat-card-title>
@@ -33,6 +32,12 @@
         color="warn"
       >
         Delete
+      </button>
+      <button
+        class="ml20"
+        mat-raised-button
+      >
+      Comments ({{ commentCounts[p.id] || 0 }})
       </button>
 
     </mat-card-actions>

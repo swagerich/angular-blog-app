@@ -1,4 +1,4 @@
-<div *ngIf="loadPublications.length > 0" class="boostrap-wrapper animate__animated animate__fadeIn">
+<div *ngIf="loadPublications.length > 0;else noPublication" class="boostrap-wrapper animate__animated animate__fadeIn">
     <div class="container-fluid">
       <mat-card  class="col-12 mb20 ">
         <mat-card-content>
@@ -18,4 +18,13 @@
       </div>
     </div>
   </div>
+  
+  <ng-template #noPublication>
+    <mat-card  class="col-12  boostrap-wrapper animate__animated animate__fadeIn">
+      <mat-card-content>
+        <mat-card-title class="text-center"> No hay publicaciones disponibles para la categoria {{categoryId}} </mat-card-title>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+  
   

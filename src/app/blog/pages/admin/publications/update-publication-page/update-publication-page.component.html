@@ -57,10 +57,11 @@
               </div>
     
               <mat-form-field appearance="fill" class="mt10 w100">
-                <mat-label>Categorie</mat-label>
+                <mat-label>Categories</mat-label>
                 <mat-select formControlName="categoria">
+                  <mat-option>None</mat-option>
                   <mat-option *ngFor="let c of categories" [value]="c">
-                    {{ c.categoria.nombre }}
+                    {{ c.nombre }}
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="onValidateField('categoria')">

@@ -7,5 +7,5 @@ export interface PublicationDto{
     contenido:string;
     categoria:CategoriaDto;
     likes_count:number;
-
+    getPhotoHashCode:number;
 }

@@ -1,10 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, Subject, of, tap, catchError } from 'rxjs';
+import { Observable, Subject, of, tap, catchError} from 'rxjs';
 import { environments } from 'src/environments/environments';
 import { LoginDto } from '../../interfaces/proyection/loginDto.interface';
 import { User } from '../../interfaces/user.interface';
 import { SignupDto } from '../../interfaces/proyection/signupDto.interface';
+import { Router } from '@angular/router';
+import { SideNavComponent } from '../../components/side-nav/side-nav.component';
+
+export  interface TokenRefresh{
+  accessToken:string;
+  refreshToken:string;
+  tokenType:string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +20,7 @@ import { SignupDto } from '../../interfaces/proyection/signupDto.interface';
 export class AuthService {
   public loginStatusSubject = new Subject<boolean>();
   private endPoint: string = environments.baseUrl;
-
+  private router = inject(Router);
   private http = inject(HttpClient);
   constructor() {}
 
@@ -48,13 +56,25 @@ export class AuthService {
     );
   }
 
-  userSaveTokenLocalStorage(accessToken: string) {
-    localStorage.setItem('accessToken', accessToken);
-    return true;
+  refreshToken(token:string):Observable<TokenRefresh> {
+    const body = { token: token };
+    return this.http.post<TokenRefresh>(`${this.endPoint}/auth/refreshToken`,body)
   }
 
-  readTokenLocalStorage(): string | null {
+  setToken(accessToken: string) :boolean{
+   localStorage.setItem('accessToken', accessToken);
+   return true;
+  }
+
+  setRefreshToken(refresh:string){
+    localStorage.setItem('refreshToken',refresh);
+  }
+
+  getToken(): string | null {
     return localStorage.getItem('accessToken');
+  }
+  getRefreshToken(): string | null {
+    return localStorage.getItem('refreshToken');
   }
 
   //set userDetail
@@ -62,11 +82,10 @@ export class AuthService {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
-  //logout : remove token from local storage
-  logout() {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('user');
-    return true;
+  logout():void {      
+      localStorage.clear();
+   
+    //  this.router.navigate(['/login']);
   }
 
   isLoggedIn(): boolean | any {

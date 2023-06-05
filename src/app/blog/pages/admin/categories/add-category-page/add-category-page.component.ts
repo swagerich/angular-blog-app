@@ -34,18 +34,20 @@ export class AddCategoryPageComponent {
       this.myForm.markAllAsTouched();
       return;
     }
-    console.log(this.currentCategory);
 
     this.categoriaService.addCategorie(this.currentCategory).subscribe({
       next:() =>{
        const name = this.myForm.get('nombre')?.value;
-       Swal.fire('Exito!',`${name} Agregado con exito!`,'success');
+       Swal.fire('Exito!',`${name} Agregado con exito!`,'success')
+       .then(resp =>{
+        if(resp.isConfirmed){
+          this.myForm.reset();
+        }
+       });
       },
       error:() => {
-      this.validatorService.validateSnackBar('Ocurrio un problema en el sistema!')
-      },
-      complete:() =>{
-        this.myForm.reset();
+          this.validatorService.validateSnackBar('Ocurrio un problema en el sistema!')
+        
       }
     })
 

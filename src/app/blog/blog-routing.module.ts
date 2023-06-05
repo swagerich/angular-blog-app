@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CategoriesPageComponent } from './pages/admin/categories/categories-page/categories-page.component';
-import { CommentsPageComponent } from './pages/admin/comments/comments-page/comments-page.component';
 import { PublicationsPageComponent } from './pages/admin/publications/publications-page/publications-page.component';
 import { AdminLayoutPageComponent } from './pages/admin/admin-layout-page/admin-layout-page.component';
 import { WelcomePageComponent } from './pages/admin/welcome-page/welcome-page.component';
@@ -117,10 +116,6 @@ const routes: Routes = [
       {
         path: 'view-details/:id',
         component: ViewDetailsCategoryPageComponent,
-      },
-      {
-        path: 'comments',
-        component: CommentsPageComponent,
       },
       {
         path: 'publications',

@@ -2,7 +2,6 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -43,7 +42,8 @@ export class LoginPageComponent implements OnInit {
     }
     this.authService.userWithToken(this.currentLogin).subscribe({
       next: (data) => {
-        this.authService.userSaveTokenLocalStorage(data.accessToken);
+        this.authService.setToken(data.accessToken);
+        this.authService.setRefreshToken(data.refreshToken);
         this.authService.getCurrentUser().subscribe({
           //USER PRINCIPAL
           next: (user: any) => {

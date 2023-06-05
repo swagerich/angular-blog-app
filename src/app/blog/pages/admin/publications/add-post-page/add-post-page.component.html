@@ -57,6 +57,16 @@
                 </mat-error>
               </mat-form-field>
             </div>
+
+            <div class="col-md-6">
+              <label for="formFile" class="form-label">Image Heroe</label>
+              <input 
+              formControlName="getPhotoHashCode" 
+              (change)="selectionPhoto($event)" 
+              class="form-control" 
+              type="file"
+              id="formFile">
+            </div>
           </div>
 
           <mat-form-field appearance="fill" class="mt10 w100">
